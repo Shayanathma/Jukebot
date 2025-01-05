@@ -14,6 +14,7 @@ import streamlit as st
 import random
 
 nltk.download('punkt')
+nltk.download('punkt_tab')
 nltk.download('stopwords')
 
 # Load intents
