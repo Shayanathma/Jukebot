@@ -172,7 +172,7 @@ def get_song_info(song_name):
         return None
 
 # Streamlit UI part
-st.title("Jukebox Music Chatbot")
+st.title("Jukebot: The Music Chatbot")
 
 # Sidebar Menu
 menu = st.sidebar.radio("Select a page", ["Home", "Conversation History", "About"])
