@@ -2,4 +2,4 @@ nltk==3.9.1
 scikit-learn==1.6.0
 spotipy==2.24.0
 streamlit==1.41.0
-#setuptools==67.6.0
+setuptools==67.6.0
