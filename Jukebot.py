@@ -13,13 +13,13 @@ from datetime import datetime
 import streamlit as st
 import random
 
+nltk.download('punkt')
+nltk.download('stopwords')
+
 # Load intents
 with open('music_intents.json', 'r') as file:
     data = json.load(file)
     intents = data['intents']
-
-nltk.download('punkt')
-nltk.download('stopwords')
 
 # Preprocessing function
 def preprocess_text(text):
