@@ -1,5 +1,5 @@
 nltk==3.7
-scikit-learn==1.0.2
+scikit-learn>=1.0.2
 spotipy==2.19.0
 streamlit==1.16.0
 setuptools==67.6.0
