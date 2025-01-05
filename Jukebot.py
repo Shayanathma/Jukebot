@@ -267,7 +267,7 @@ if menu == "Home":
         # Update chat log
         st.session_state['chat_log'].append(f"You: {user_input}")
         st.session_state['chat_log'].append(f": {response}")
-        st.write(f": {response}")
+        st.write(f"{response}")
 
 
 # Conversation History Section
