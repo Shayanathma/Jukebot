@@ -8,13 +8,15 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-from spotify_auth import get_spotify_token  # Import the function to get the token
-from datetime import datetime  # Import datetime module for date formatting
+from spotify_auth import get_spotify_token
+from datetime import datetime
+import streamlit as st
+import random
 
 # Load intents
 with open('music_intents.json', 'r') as file:
     data = json.load(file)
-    intents = data['intents']  # Access the 'intents' list
+    intents = data['intents']
 
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -49,7 +51,7 @@ model = LogisticRegression()
 model.fit(X_train, y_train)
 
 # Get Spotify token from spotify_auth.py
-access_token = get_spotify_token()  # Fetch the token from spotify_auth.py
+access_token = get_spotify_token()
 
 # Use the token to authenticate Spotify API requests
 sp = spotipy.Spotify(auth=access_token)
@@ -63,11 +65,9 @@ def predict_intent(user_input):
 # Date formatting function
 def format_date(date_string):
     try:
-        # Convert date string (yyyy-mm-dd) to dd-mm-yyyy
         date_obj = datetime.strptime(date_string, '%Y-%m-%d')
         return date_obj.strftime('%d-%m-%Y')
     except Exception as e:
-        print(f"Error formatting date: {e}")
         return date_string
 
 # Spotify helpers
@@ -89,7 +89,6 @@ def get_audio_features(track_id):
             'duration_ms': audio_features['duration_ms']
         }
     except Exception as e:
-        print(f"Error fetching audio features: {e}")
         return None
 
 def get_album_info(album_name):
@@ -100,14 +99,13 @@ def get_album_info(album_name):
             album_info = {
                 'name': album['name'],
                 'artist': album['artists'][0]['name'],
-                'release_date': format_date(album['release_date']),  # Format date
+                'release_date': format_date(album['release_date']),
                 'url': album['external_urls']['spotify']
             }
             return album_info
         else:
             return None
     except Exception as e:
-        print(f"Error fetching album info: {e}")
         return None
 
 def get_artist_info(artist_name):
@@ -125,7 +123,6 @@ def get_artist_info(artist_name):
         else:
             return None
     except Exception as e:
-        print(f"Error fetching artist info: {e}")
         return None
 
 def get_trending_tracks():
@@ -140,7 +137,6 @@ def get_trending_tracks():
             })
         return tracks
     except Exception as e:
-        print(f"Error fetching trending tracks: {e}")
         return []
 
 def get_recommendations(seed_genre):
@@ -155,7 +151,6 @@ def get_recommendations(seed_genre):
             })
         return recommendations
     except Exception as e:
-        print(f"Error fetching recommendations: {e}")
         return []
 
 def get_song_info(song_name):
@@ -167,28 +162,33 @@ def get_song_info(song_name):
                 'name': track['name'],
                 'artist': track['artists'][0]['name'],
                 'album': track['album']['name'],
-                'release_date': format_date(track['album']['release_date']),  # Format date
+                'release_date': format_date(track['album']['release_date']),
                 'url': track['external_urls']['spotify']
             }
             return song_info
         else:
             return None
     except Exception as e:
-        print(f"Error fetching song info: {e}")
         return None
 
-# Chat loop
-while True:
-    user_input = input("You: ")
-    if user_input.lower() == 'quit':
-        confirm = input("Jukebox: Are you sure you want to quit? (yes/no): ")
-        if confirm.lower() == 'yes':
-            print("Jukebox: Goodbye!")
-            break
-        else:
-            continue
+# Streamlit UI part
+st.title("Jukebox Music Chatbot")
 
+# Store the chat log
+if 'chat_log' not in st.session_state:
+    st.session_state['chat_log'] = []
+
+# Display chat log
+for message in st.session_state['chat_log']:
+    st.write(message)
+
+# Text input for the user
+user_input = st.text_input("You:", "")
+
+# Display chatbot response
+if user_input:
     intent = predict_intent(user_input)
+    response = ""
     for intent_data in intents:
         if intent_data['tag'] == intent:
             response = intent_data['responses'][0]
@@ -197,32 +197,32 @@ while True:
                 album_name = user_input.split('album')[-1].strip()
                 album_info = get_album_info(album_name)
                 if album_info:
-                    print(f"Jukebox: Here's the info about '{album_info['name']}':")
-                    print(f"Artist: {album_info['artist']}, Release Date: {album_info['release_date']}")
-                    print(f"Listen here: {album_info['url']}")
+                    response = f"Jukebox: Here's the info about '{album_info['name']}':\n" \
+                               f"Artist: {album_info['artist']}, Release Date: {album_info['release_date']}\n" \
+                               f"Listen here: {album_info['url']}"
                 else:
-                    print(f"Jukebox: Sorry, I couldn't find any information about the album '{album_name}'.")
+                    response = f"Jukebox: Sorry, I couldn't find any information about the album '{album_name}'."
 
             elif 'artist' in intent_data['tag'].lower():
                 artist_name = user_input.split('artist')[-1].strip()
                 artist_info = get_artist_info(artist_name)
                 if artist_info:
-                    print(f"Jukebox: Here's the info about '{artist_info['name']}':")
-                    print(f"Genres: {artist_info['genres']}, Followers: {artist_info['followers']}")
-                    print(f"Explore more: {artist_info['url']}")
+                    response = f"Jukebox: Here's the info about '{artist_info['name']}':\n" \
+                               f"Genres: {artist_info['genres']}, Followers: {artist_info['followers']}\n" \
+                               f"Explore more: {artist_info['url']}"
                 else:
-                    print(f"Jukebox: Sorry, I couldn't find any information about the artist '{artist_name}'.")
+                    response = f"Jukebox: Sorry, I couldn't find any information about the artist '{artist_name}'."
 
             elif 'song' in user_input.lower():
                 song_name = user_input.split('song')[-1].strip()
                 song_info = get_song_info(song_name)
                 if song_info:
-                    print(f"Jukebox: Here's the info about the song '{song_info['name']}':")
-                    print(f"Artist: {song_info['artist']}, Album: {song_info['album']}")
-                    print(f"Release Date: {song_info['release_date']}")
-                    print(f"Listen here: {song_info['url']}")
+                    response = f"Jukebox: Here's the info about the song '{song_info['name']}':\n" \
+                               f"Artist: {song_info['artist']}, Album: {song_info['album']}\n" \
+                               f"Release Date: {song_info['release_date']}\n" \
+                               f"Listen here: {song_info['url']}"
                 else:
-                    print(f"Jukebox: Sorry, I couldn't find any information about the song '{song_name}'.")
+                    response = f"Jukebox: Sorry, I couldn't find any information about the song '{song_name}'."
 
             elif 'audio features' in intent_data['tag'].lower():
                 song_name = user_input.split('audio features')[-1].strip()
@@ -231,33 +231,41 @@ while True:
                     track_id = song_info['url'].split('/')[-1]
                     audio_features = get_audio_features(track_id)
                     if audio_features:
-                        print(f"Jukebox: Audio features for '{song_info['name']}':")
+                        response = f"Jukebox: Audio features for '{song_info['name']}':\n"
                         for feature, value in audio_features.items():
-                            print(f"{feature.capitalize()}: {value}")
+                            response += f"{feature.capitalize()}: {value}\n"
                     else:
-                        print(f"Jukebox: Sorry, I couldn't fetch audio features for '{song_name}'.")
+                        response = f"Jukebox: Sorry, I couldn't fetch audio features for '{song_name}'."
                 else:
-                    print(f"Jukebox: Sorry, I couldn't find any information about the song '{song_name}'.")
+                    response = f"Jukebox: Sorry, I couldn't find any information about the song '{song_name}'."
 
             elif 'trending' in intent_data['tag'].lower():
                 trending_tracks = get_trending_tracks()
                 if trending_tracks:
-                    print("Jukebox: Here are the trending tracks:")
+                    response = "Jukebox: Here are the trending tracks:\n"
                     for track in trending_tracks:
-                        print(f"- {track['name']} by {track['artist']} (Listen: {track['url']})")
+                        response += f"- {track['name']} by {track['artist']} (Listen: {track['url']})\n"
                 else:
-                    print("Jukebox: Sorry, I couldn't fetch trending tracks right now.")
+                    response = "Jukebox: Sorry, I couldn't fetch trending tracks right now."
 
             elif 'recommend' in intent_data['tag'].lower():
                 genre = user_input.split('recommend')[-1].strip()
                 recommendations = get_recommendations(genre)
                 if recommendations:
-                    print(f"Jukebox: Here are some recommended tracks for '{genre}':")
+                    response = f"Jukebox: Here are some recommended tracks for '{genre}':\n"
                     for rec in recommendations:
-                        print(f"- {rec['name']} by {rec['artist']} (Listen: {rec['url']})")
+                        response += f"- {rec['name']} by {rec['artist']} (Listen: {rec['url']})\n"
                 else:
-                    print(f"Jukebox: Sorry, I couldn't fetch recommendations for '{genre}'.")
+                    response = f"Jukebox: Sorry, I couldn't fetch recommendations for '{genre}'."
 
             else:
-                print(f"Jukebox: {response}")
+                response = f"Jukebox: {response}"
             break
+
+    # Update chat log
+    st.session_state['chat_log'].append(f"You: {user_input}")
+    st.session_state['chat_log'].append(response)
+
+    # Display updated chat log
+    for message in st.session_state['chat_log']:
+        st.write(message)
