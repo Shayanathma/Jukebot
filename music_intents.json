@@ -1,0 +1,262 @@
+{
+    "intents": [
+      {
+        "tag": "greeting",
+        "patterns": [
+          "Hi",
+          "Hello",
+          "Hey",
+          "How are you",
+          "What's up"
+        ],
+        "responses": [
+          "Hi, welcome to JukeBot!",
+          "Hello! Ready to discover some tunes with JukeBot?"
+        ]
+      },
+      {
+        "tag": "goodbye",
+        "patterns": [
+          "Bye",
+          "See you later",
+          "Goodbye",
+          "Take care"
+        ],
+        "responses": [
+          "Goodbye, hope you find your next favorite song with JukeBot!",
+          "Take care, enjoy your music with JukeBot!"
+        ]
+      },
+      {
+        "tag": "thanks",
+        "patterns": [
+          "Thank you",
+          "Thanks",
+          "Thanks a lot",
+          "I appreciate it"
+        ],
+        "responses": [
+          "You're welcome, happy listening with JukeBot!",
+          "Glad I could help you discover new music with JukeBot!"
+        ]
+      },
+      {
+        "tag": "about",
+        "patterns": [
+          "What can you do",
+          "Who are you",
+          "What are you",
+          "What is your purpose"
+        ],
+        "responses": [
+          "I can help you discover music, suggest songs, fetch audio features, and talk all things music with JukeBot!",
+          "I'm JukeBot, your personal music assistant, ready to help you find your next favorite track and more!"
+        ]
+      },
+      {
+        "tag": "help",
+        "patterns": [
+          "Help",
+          "I need help",
+          "Can you help me",
+          "What should I do"
+        ],
+        "responses": [
+          "Sure! What music-related help do you need today with JukeBot?",
+          "How can JukeBot assist you with your music needs?"
+        ]
+      },
+      {
+        "tag": "audio_features",
+        "patterns": [
+          "Tell me about the audio features of [song name]",
+          "Can you show me the audio features of [song name]?",
+          "What are the features of [song name]?"
+        ],
+        "responses": [
+          "Here are the audio features for '[song name]': [features]. Want to listen to it on JukeBot?",
+          "The audio features for '[song name]' include tempo, key, danceability, and more. Would you like to hear the track?"
+        ]
+      },
+      {
+        "tag": "genre",
+        "patterns": [
+          "What is your favorite genre?",
+          "Can you suggest a genre?",
+          "What genre should I listen to?"
+        ],
+        "responses": [
+          "JukeBot can suggest anything from pop to rock, jazz to classical! What mood are you in?",
+          "Try listening to something new today with JukeBot! Want me to recommend a genre?"
+        ]
+      },
+      {
+        "tag": "song_recommendation",
+        "patterns": [
+          "Can you suggest a song?",
+          "What's a good song?",
+          "What should I listen to?"
+        ],
+        "responses": [
+          "How about ‘Bohemian Rhapsody’ by Queen? It's a classic, and JukeBot can play it for you!",
+          "I recommend 'Blinding Lights' by The Weeknd if you're in the mood for something upbeat. Want to hear it on JukeBot?"
+        ]
+      },
+      {
+        "tag": "playlist",
+        "patterns": [
+          "Can you create a playlist?",
+          "Make me a playlist",
+          "I need a playlist for work/party"
+        ],
+        "responses": [
+          "I'll make you a playlist with JukeBot! What vibe are you going for?",
+          "JukeBot has just the playlist for you! What genre do you prefer?"
+        ]
+      },
+      {
+        "tag": "artist",
+        "patterns": [
+          "Tell me about [artist name]",
+          "Who is [artist name]?",
+          "What songs does [artist name] have?"
+        ],
+        "responses": [
+          "[Artist name] is known for [brief description]. Want me to play some of their top songs with JukeBot?",
+          "Check out [artist name]'s greatest hits – JukeBot can play them for you!"
+        ]
+      },
+      {
+        "tag": "album",
+        "patterns": [
+          "Tell me about the album [album name]",
+          "What are some good albums?",
+          "Do you know the album [album name]?"
+        ],
+        "responses": [
+          "[Album name] by [artist] is a masterpiece! Want me to play a track on JukeBot?",
+          "If you're into [genre], '[Album name]' is definitely worth checking out with JukeBot!"
+        ]
+      },
+      {
+        "tag": "trending",
+        "patterns": [
+          "What's trending in music?",
+          "Any new music releases?",
+          "What's popular right now?"
+        ],
+        "responses": [
+          "The latest in music is [artist or album]. Want to know more from JukeBot?",
+          "Check out the trending album: [album name] by [artist]. Want to listen on JukeBot?"
+        ]
+      },
+      {
+        "tag": "mood",
+        "patterns": [
+          "I'm feeling sad, what should I listen to?",
+          "I'm in a party mood, any song suggestions?"
+        ],
+        "responses": [
+          "If you're feeling down, try 'Someone Like You' by Adele with JukeBot",
+          "For a party vibe, how about ‘Uptown Funk’ by Mark Ronson? JukeBot can play it!"
+        ]
+      },
+      {
+        "tag": "favorite_song",
+        "patterns": [
+          "What's your favorite song?",
+          "Do you have a favorite song?",
+          "What song do you like?"
+        ],
+        "responses": [
+          "As a chatbot, I don't have preferences, but I can help you find your favorite song with JukeBot!",
+          "I don't have a favorite song, but I can help you find one on JukeBot!"
+        ]
+      },
+      {
+        "tag": "concerts",
+        "patterns": [
+          "When is [artist]'s next concert?",
+          "Tell me about upcoming concerts"
+        ],
+        "responses": [
+          "I can help you with concert info! Want to know when [artist] is performing near you? JukeBot has all the details!",
+          "Check out the latest concert dates for [artist]! JukeBot can help you find the tickets."
+        ]
+      },
+      {
+        "tag": "music_trivia",
+        "patterns": [
+          "Tell me a music fact",
+          "Do you know any fun music trivia?",
+          "Give me a music quiz"
+        ],
+        "responses": [
+          "Did you know that the longest song ever recorded is 18 hours long? JukeBot can play a shorter one if you'd prefer!",
+          "Here's a fun fact: The Beatles' ‘Hey Jude’ is one of the longest songs to ever hit No. 1 on the charts! JukeBot can play it for you!"
+        ]
+      },
+      {
+        "tag": "lyrics",
+        "patterns": [
+          "What are the lyrics to [song name]?",
+          "Can you find the lyrics to [song name]?",
+          "I want the lyrics to [song name]"
+        ],
+        "responses": [
+          "Here are the lyrics to [song name]: [lyrics]. Want to hear the song on JukeBot?",
+          "I can fetch those lyrics for you! Here's the first line... Want me to play the song with JukeBot?"
+        ]
+      },
+      {
+        "tag": "album_details",
+        "patterns": [
+          "Tell me about the album [album name]",
+          "What is [album name] about?",
+          "What genre is [album name]?"
+        ],
+        "responses": [
+          "The album '[album name]' by [artist] has a great mix of [genre]. Want to hear a track from it?",
+          "Check out '[album name]' – it's a classic in the [genre] genre. Would you like to listen to it?"
+        ]
+      },
+      {
+        "tag": "user_preferences",
+        "patterns": [
+          "Can you save my favorite songs?",
+          "Do you remember my favorite genre?",
+          "Can you suggest songs based on my taste?"
+        ],
+        "responses": [
+          "I can help you discover songs based on your mood and preferences! Want me to suggest some?",
+          "I can suggest songs based on your favorite genres, let me know what you'd like!"
+        ]
+      },
+      {
+        "tag": "time_of_day_recommendations",
+        "patterns": [
+          "What should I listen to in the morning?",
+          "What are some good songs to listen to at night?",
+          "Give me a song for evening relaxation"
+        ],
+        "responses": [
+          "For the morning, how about something uplifting like 'Happy' by Pharrell Williams?",
+          "At night, try listening to 'Blinding Lights' by The Weeknd for some evening energy!",
+          "Need relaxation? I recommend 'Weightless' by Marconi Union for a calm evening vibe."
+        ]
+      },
+      {
+        "tag": "music_quiz",
+        "patterns": [
+          "Can we do a music quiz?",
+          "How well do I know music?",
+          "Give me a music challenge"
+        ],
+        "responses": [
+          "Let's do a music quiz! I'll ask you questions, and you can guess the answers. Ready?",
+          "Okay, music lover! Here’s your quiz: Which artist is known as the ‘King of Pop’?"
+        ]
+      }
+    ]
+  }
+  
