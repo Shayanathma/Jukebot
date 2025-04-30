@@ -1,12 +1,10 @@
 import spotipy
-import os
+import streamlit as st
 from spotipy.oauth2 import SpotifyClientCredentials
-from dotenv import load_dotenv
 
-load_dotenv()
-
-CLIENT_ID = os.getenv('SPOTIPY_CLIENT_ID')
-CLIENT_SECRET = os.getenv('SPOTIPY_CLIENT_SECRET')
+# Load credentials from Streamlit secrets
+CLIENT_ID = st.secrets["SPOTIPY_CLIENT_ID"]
+CLIENT_SECRET = st.secrets["SPOTIPY_CLIENT_SECRET"]
 
 def get_spotify_token():
     client_credentials_manager = SpotifyClientCredentials(
