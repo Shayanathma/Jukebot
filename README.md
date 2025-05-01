@@ -47,6 +47,9 @@ Otherwise, it returns a static predefined response from music_intents.json.
     Start the chatbot using Streamlit:
     streamlit run Jukebot.py
 
+    Or to deploy from streamlit:
+    https://jukebot.streamlit.app/
+
 ### 📝 NOTE:
 This is a learning project and may not be fully refined.
 For example, some user queries may not return ideal results if intent matching fails or Spotify returns incomplete metadata. Improvements are planned to make intent recognition and error handling more robust.
