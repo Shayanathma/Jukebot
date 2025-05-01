@@ -194,8 +194,33 @@ if menu == "Home":
         for intent_data in intents:
             if intent_data['tag'] == intent:
                 response = intent_data['responses'][0]
+                
+                if 'recommend' in intent_data['tag'].lower():
+                    genre = user_input.split('recommend')[-1].strip()
+                    recommendations = get_recommendations(genre)
+                    if recommendations:
+                        response = f"Here are some recommended tracks for '{genre}':\n"
+                        for rec in recommendations:
+                            response += f"- {rec['name']} by {rec['artist']} (Listen: {rec['url']})\n"
+                    else:
+                        response = f"Sorry, I couldn't fetch recommendations for '{genre}'."
+                
+                elif 'audio features' in intent_data['tag'].lower():
+                    song_name = user_input.split('audio features')[-1].strip()
+                    song_info = get_song_info(song_name)
+                    if song_info:
+                        track_id = song_info['url'].split('/')[-1]
+                        audio_features = get_audio_features(track_id)
+                        if audio_features:
+                            response = f"Audio features for '{song_info['name']}':\n"
+                            for feature, value in audio_features.items():
+                                response += f"{feature.capitalize()}: {value}\n"
+                        else:
+                            response = f"Sorry, I couldn't fetch audio features for '{song_name}'."
+                    else:
+                        response = f"Sorry, I couldn't find any information about the song '{song_name}'."
 
-                if 'album' in intent_data['tag'].lower():
+                elif 'album' in intent_data['tag'].lower():
                     album_name = user_input.split('album')[-1].strip()
                     album_info = get_album_info(album_name)
                     if album_info:
@@ -215,21 +240,7 @@ if menu == "Home":
                     else:
                         response = f"Sorry, I couldn't find any information about the artist '{artist_name}'."
                     
-                elif 'audio features' in intent_data['tag'].lower():
-                    song_name = user_input.split('audio features')[-1].strip()
-                    song_info = get_song_info(song_name)
-                    if song_info:
-                        track_id = song_info['url'].split('/')[-1]
-                        audio_features = get_audio_features(track_id)
-                        if audio_features:
-                            response = f"Audio features for '{song_info['name']}':\n"
-                            for feature, value in audio_features.items():
-                                response += f"{feature.capitalize()}: {value}\n"
-                        else:
-                            response = f"Sorry, I couldn't fetch audio features for '{song_name}'."
-                    else:
-                        response = f"Sorry, I couldn't find any information about the song '{song_name}'."
-
+                
                 elif 'song' in user_input.lower():
                     song_name = user_input.split('song')[-1].strip()
                     song_info = get_song_info(song_name)
@@ -251,16 +262,7 @@ if menu == "Home":
                     else:
                         response = "Sorry, I couldn't fetch trending tracks right now."
 
-                elif 'recommend' in intent_data['tag'].lower():
-                    genre = user_input.split('recommend')[-1].strip()
-                    recommendations = get_recommendations(genre)
-                    if recommendations:
-                        response = f"Here are some recommended tracks for '{genre}':\n"
-                        for rec in recommendations:
-                            response += f"- {rec['name']} by {rec['artist']} (Listen: {rec['url']})\n"
-                    else:
-                        response = f"Sorry, I couldn't fetch recommendations for '{genre}'."
-
+                
 
         # Update chat log
         st.session_state['chat_log'].append(f"You: {user_input}")
